@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/ -->
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="fr-FR" prefix="og: http://ogp.me/ns#" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+<title>[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v5.6 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier">
+<meta property="og:description" content="ADO.NET est un ensemble de composants présents de base dans le framework .NET permettant l’accès et la gestion de données situées sur une base de données relationnelle (SQL Server, Oracle, etc…) ou non. ADO.NET est une évolution de ADO (ActiveX Data Objects). Les classes ADO.NET peuvent être divisées en 2 parties. Les classes permettant de …">
+<meta property="og:url" content="https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/">
+<meta property="og:site_name" content="Blog de Aymeric Lagier">
+<meta property="article:tag" content="ADO.NET">
+<meta property="article:tag" content="C#">
+<meta property="article:section" content=".NET">
+<meta property="article:published_time" content="2010-01-29T16:56:43+00:00">
+<meta property="article:modified_time" content="2012-10-27T11:39:52+00:00">
+<meta property="og:updated_time" content="2012-10-27T11:39:52+00:00">
+<meta property="og:image" content="https://www.aymericlagier.com/wp-content/uploads/2010/01/schema_ado-300x237.png">
+<meta property="og:image:secure_url" content="https://www.aymericlagier.com/wp-content/uploads/2010/01/schema_ado-300x237.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="ADO.NET est un ensemble de composants présents de base dans le framework .NET permettant l’accès et la gestion de données situées sur une base de données relationnelle (SQL Server, Oracle, etc…) ou non. ADO.NET est une évolution de ADO (ActiveX Data Objects). Les classes ADO.NET peuvent être divisées en 2 parties. Les classes permettant de […]">
+<meta name="twitter:title" content="[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier">
+<meta name="twitter:site" content="@aymlagier">
+<meta name="twitter:image" content="https://www.aymericlagier.com/wp-content/uploads/2010/01/schema_ado-300x237.png">
+<meta name="twitter:creator" content="@aymlagier">
+<script type="text/javascript" async="" defer="" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/piwik.js.téléchargement"></script><script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/www.aymericlagier.com\/","name":"Blog de Aymeric Lagier","potentialAction":{"@type":"SearchAction","target":"https:\/\/www.aymericlagier.com\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"Person","url":"https:\/\/www.aymericlagier.com\/2010\/01\/29\/introduction-a-ado-net-en-c\/","sameAs":["https:\/\/fr.linkedin.com\/in\/aymericlagier","https:\/\/twitter.com\/aymlagier"],"@id":"#person","name":"Aymeric Lagier"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Blog de Aymeric Lagier » Flux" href="https://www.aymericlagier.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Blog de Aymeric Lagier » Flux des commentaires" href="https://www.aymericlagier.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Blog de Aymeric Lagier » [ADO.NET] Introduction à ADO.NET en C# Flux des commentaires" href="https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.aymericlagier.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8.3"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/wp-emoji-release.min.js.téléchargement" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="sparkling-bootstrap-css" href="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/bootstrap.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="sparkling-icons-css" href="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/font-awesome.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="sparkling-fonts-css" href="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="sparkling-style-css" href="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/style.css" type="text/css" media="all">
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/jquery.js.téléchargement"></script>
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/jquery-migrate.min.js.téléchargement"></script>
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/modernizr.min.js.téléchargement"></script>
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/bootstrap.min.js.téléchargement"></script>
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/functions.min.js.téléchargement"></script>
+<link rel="https://api.w.org/" href="https://www.aymericlagier.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.aymericlagier.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.aymericlagier.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.8.3">
+<link rel="shortlink" href="https://www.aymericlagier.com/?p=421">
+<link rel="alternate" type="application/json+oembed" href="https://www.aymericlagier.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.aymericlagier.com%2F2010%2F01%2F29%2Fintroduction-a-ado-net-en-c%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://www.aymericlagier.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.aymericlagier.com%2F2010%2F01%2F29%2Fintroduction-a-ado-net-en-c%2F&amp;format=xml">
+<style type="text/css">body, .entry-content {color:#6B6B6B}.entry-content {font-family: Arial;}.entry-content {font-size:14px}.entry-content {font-weight:normal}</style><link rel="pingback" href="https://www.aymericlagier.com/xmlrpc.php">		<style type="text/css" id="wp-custom-css">
+			blockquote p {
+font-size:14px
+}		</style>
+	
+</head>
+
+<body class="post-template-default single single-post postid-421 single-format-standard">
+<a class="sr-only sr-only-focusable" href="https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/#content">Skip to main content</a>
+<div id="page" class="hfeed site">
+
+	<header id="masthead" class="site-header" role="banner">
+		<nav class="navbar navbar-default " role="navigation">
+			<div class="container">
+				<div class="row">
+					<div class="site-navigation-inner col-sm-12">
+						<div class="navbar-header">
+							<button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+
+														<div id="logo">
+															<p class="site-name">																		<a class="navbar-brand" href="https://www.aymericlagier.com/" title="Blog de Aymeric Lagier" rel="home">Blog de Aymeric Lagier</a>
+																</p>																													</div><!-- end of #logo -->
+						</div>
+											</div>
+				</div>
+			</div>
+		</nav><!-- .site-navigation -->
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+		<div class="top-section">
+								</div>
+
+		<div class="container main-content-area">
+						<div class="row pull-left">
+				<div class="main-content-inner col-sm-12 col-md-8">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		<article id="post-421" class="post-421 post type-post status-publish format-standard hentry category-net category-acces-aux-donnees category-ado-net category-csharp tag-ado-net tag-c">
+		<div class="post-inner-content">
+		<header class="entry-header page-header">
+
+			<h1 class="entry-title ">[ADO.NET] Introduction à ADO.NET en C#</h1>
+
+			<div class="entry-meta">
+				<span class="posted-on"><i class="fa fa-calendar"></i> <a href="https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/" rel="bookmark"><time class="entry-date published" datetime="2010-01-29T16:56:43+00:00">29 janvier 2010</time><time class="updated" datetime="2012-10-27T11:39:52+00:00">27 octobre 2012</time></a></span><span class="byline"> <i class="fa fa-user"></i> <span class="author vcard"><a class="url fn n" href="https://www.aymericlagier.com/author/admin/">Aymeric</a></span></span>
+								<span class="cat-links"><i class="fa fa-folder-open-o"></i>
+				 <a href="https://www.aymericlagier.com/category/net/" rel="category tag">.NET</a>, <a href="https://www.aymericlagier.com/category/acces-aux-donnees/" rel="category tag">Accès aux données</a>, <a href="https://www.aymericlagier.com/category/acces-aux-donnees/ado-net/" rel="category tag">ADO.NET</a>, <a href="https://www.aymericlagier.com/category/net/csharp/" rel="category tag">C#</a>				</span>
+								
+			</div><!-- .entry-meta -->
+		</header><!-- .entry-header -->
+
+		<div class="entry-content">
+			<p>ADO.NET est un ensemble de composants présents de base dans le framework .NET permettant l’accès et la gestion de données situées sur une base de données relationnelle (SQL Server, Oracle, etc…) ou non. ADO.NET est une évolution de <a title="ActiveX Data Objects" href="http://fr.wikipedia.org/wiki/ActiveX_Data_Objects" target="_blank">ADO</a> (ActiveX Data Objects).</p>
+<p>Les classes ADO.NET peuvent être divisées en 2 parties. Les classes permettant de se connecter à la source de données et les classes utilisées pour gérer les données.</p>
+<p>&nbsp;</p>
+<p><strong><span style="text-decoration: underline">La connexion à la source de données</span></strong></p>
+<p>&nbsp;</p>
+<p>Pour se connecter à une base de données via ADO.NET un <em>Data Provider </em>(fournisseur de données) correspondant à la base de données utilisée. Ainsi le <em>Data Provider</em> de SQL Server est optimisé pour fonctionner avec les bases de données SQL Server, idem pour le <em>Data Provider</em> Oracle. Tous les <em>Data Providers</em> sont dérivés d’une seule et même classe, ils implémentent les mêmes méthodes, propriétés, et fonctionnent donc de la même manière. Dans certains cas, les <em>Data Providers</em> peuvent implémenter des fonctionnalités spécifiques à la base de données utilisée (exemple des requêtes XML pour SQL Server).</p>
+<p>Les 4 fournisseurs de données inclus dans le framework .NET :</p>
+<ul>
+<li><em>SQL Server Provider </em>: pour SQL Server 7.0 et plus).
+</li><li><em>OLE DB provider</em> : pour toutes les bases de données disposant d’un pilote <a title="Object Linking and Embedding" href="http://msdn.microsoft.com/fr-fr/library/bb469883.aspx" target="_blank">OLE DB</a> (Object Linking and Embedding). </li>
+</ul>
+<p>Note:</p>
+<blockquote>
+<p>OLE DB est une interface basée sur <a title="Component Object Model" href="http://fr.wikipedia.org/wiki/Component_Object_Model" target="_blank">COM</a> (Component Object Model) utilisée pendant plusieurs années avec ADO (ActiveX Data Objects), la plupart des bases de données ont donc un pilote OLE DB (MySQL, Access, Oracle SQL Server, etc..). Si la source de données ne propose pas de pilote OLE DB, vous pouvez <a title="Créer un pilote OLE DB" href="http://msdn.microsoft.com/en-us/library/yffccxb5(VS.71).aspx" target="_blank">le créer vous-même</a>.</p>
+<p>Comme dit précédemment, OLE DB propose des pilotes pour SQL Server et Oracle qui ont déjà des <em>Data Providers</em> dédiés. Il est donc tout à fait possible d’utiliser OLE DB à la place du <em>SQL Server Provider</em>. La seconde méthode (<em>SQL Server Provider</em>) est préférable car elle offrira de meilleures performances.</p>
+</blockquote>
+<ul>
+<li><em>Oracle provider</em> : pour Oracle (version 8i et plus).
+</li><li><em>ODBC provider</em> : pour toutes les sources de données qui ont un pliote <a title="Open DataBase Connectivity" href="http://www.commentcamarche.net/contents/odbc/odbcintro.php3" target="_blank">ODBC</a> (Open DataBase Connectivity). </li>
+</ul>
+<p>Note :</p>
+<blockquote>
+<p>ODBC est une suite de pilotes permettant la communication avec la pulpart des <a title="Système de Gestion de Base de Données" href="http://fr.wikipedia.org/wiki/Syst%C3%A8me_de_gestion_de_base_de_donn%C3%A9es" target="_blank">SGBD</a> (Système de Gestion de Base de Données) du marché comme <a title="MySQL" href="http://www.mysql.fr/" target="_blank">MySQL</a>, <a title="Oracle" href="http://www.oracle.com/" target="_blank">Oracle</a>, <a title="IBM DB2" href="http://www-01.ibm.com/software/data/db2/" target="_blank">DB2</a>, <a title="PostgreSQL" href="http://www.postgresql.fr/" target="_blank">PostgreSQL</a>, etc…</p>
+</blockquote>
+<p style="text-align: center"><a href="https://www.aymericlagier.com/wp-content/uploads/2010/01/schema_ado.png"><img style="margin-top: 10px; margin-bottom: 10px" class="size-medium wp-image-428 aligncenter" title="schéma des Data Providers en ADO.NET" alt="schema_ado" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/schema_ado-300x237.png" width="300" height="237" srcset="https://www.aymericlagier.com/wp-content/uploads/2010/01/schema_ado-300x237.png 300w, https://www.aymericlagier.com/wp-content/uploads/2010/01/schema_ado.png 543w" sizes="(max-width: 300px) 100vw, 300px"></a></p>
+<p>Côté code, les classes des <em>Data Providers </em>se trouvent dans les <em>namespaces</em> suivants :</p>
+<ul>
+<li><em>System.Data.OleDb</em>
+</li><li><em>System.Data.SqlClient</em>
+</li><li><em>System.Data.OracleClient</em>
+</li><li><em>System.Data.Odbc</em> </li>
+</ul>
+<p>Il ne faut pas oublié de rajouter à ces <em>namespaces</em>, <em>System.Data</em> qui contient les classes essentielles au fonctionnement d’ADO.NET.</p>
+<p>&nbsp;</p>
+<p><strong>Déclaration d’un </strong><em><strong>Data Provider</strong></em><strong> pour SQL Server :</strong></p>
+<p style="padding-left: 30px">Déclaration des <em>namespaces</em></p>
+<p style="padding-left: 30px"><em>&nbsp;</em></p>
+<pre class="code"><span style="color: blue">using </span>System.Data;
+<span style="color: blue">using </span>System.Data.SqlClient;
+</pre>
+<p>&nbsp;</p>
+<p>Création de la connexion</p>
+<p>&nbsp;</p>
+<pre class="code"><span style="color: #2b91af">SqlConnection </span>connexion = <span style="color: blue">new </span><span style="color: #2b91af">SqlConnection</span>();
+connexion.ConnectionString = <span style="color: #a31515">@"Data Source=localhost\SQLEXPRESS;"</span>;
+connexion.ConnectionString += <span style="color: #a31515">@"Initial Catalog=Northwind;Integrated Security=SSPI"</span>;
+</pre>
+<p>&nbsp;</p>
+<p>On construit donc la connexion avec la <em><strong>ConnectionString</strong></em><em> </em>qui indique le serveur de base de données (localhost\SQLEXPRESS), la base de données (Northwind) et la manière de s’authentifier sur le serveur (SSPI).</p>
+<p>&nbsp;</p>
+<p>Note :</p>
+<blockquote>
+<p>L’exemple ci-dessus utilise le <em>Data Provider</em> de SQL Server. Pour les autres <em>Data Providers</em>, il suffit de remplacer <em>SqlConnection</em> par <em>OracleConnecion</em>, <em>OleDbConnection</em> ou <em>OdbcConnection</em>. Le même principe s’applique pour les commandes qui suivront dans cet article.</p>
+<p>&nbsp;</p>
+</blockquote>
+<p><span style="text-decoration: underline"><strong>La gestion des données</strong></span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">L’un des avantages d’ADO.NET est sa généricité. Peu importe la source de données, le conteneur qui accueillera les données sera le même, le <strong><em>DataSet</em></strong>. Pour faire une analogie avec le C# de base, un <em>DataSet</em> est en quelque sorte un tableau (<em>array</em>), mais spécialement adapté pour accueillir des données venant d’une source de données relationnelle.</p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">ADO.NET peut fonctionner de 2 manières diffèrentes. En mode connecté (Direct Data Access), le programme se connecte à la base de données et fait un certain nombre d’opérations (<em>SELECT</em>, <em>INSERT</em>, <em>UPDATE</em>, etc…), puis la connexion est fermée. Aucune donnée n’est donc stockée en mémoire sur le client.<br>En mode déconnecté, le programme se connecte à la base de données durant un temps très bref pour rapatrier les données en mémoire. La connexion est ensuite interrompue. Une fois les opérations (<em>INSER</em>T, <em>DELETE</em>, etc…) réalisées sur le <em>DataSet</em>, le programme se connecte à nouveau à la base de données et sauvegarde les changements.</p>
+<p style="text-align: justify">&nbsp;</p>
+<p><span style="text-decoration: underline">Quel mode choisir ?</span></p>
+<p>&nbsp;</p>
+<p>L’utilisation du mode connecté est recommandé pour les sites web en ASP.NET puisque le cycle de vie d’un programme est totalement différent par rapport à une application de bureau. Dans une page web, le cycle de vie du programme n’est que de quelques secondes, les données n’ont donc pas besoin d’être stockées en mémoire. Concernant les applications lourdes, le mode déconnecté est utile lorsqu’il y a de nombreux traitements à faire sur les données avant de les modifier dans la base de données.</p>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline">Le mode Connecté (Direct Data Access)</span></p>
+<p style="padding-left: 30px"><span style="text-decoration: underline">La commande SELECT </span></p>
+<p>&nbsp;</p>
+<pre class="code"><span style="color: #2b91af">SqlConnection </span>connexion = <span style="color: blue">new </span><span style="color: #2b91af">SqlConnection</span>();
+connexion.ConnectionString = <span style="color: #a31515">@"Data Source=localhost\SQLEXPRESS;"</span>;
+connexion.ConnectionString += <span style="color: #a31515">@"Initial Catalog=Northwind;Integrated Security=SSPI"</span>;
+
+<span style="color: green">// Requête SQL
+</span><span style="color: #2b91af">SqlCommand </span>selectCommand = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>();
+selectCommand.Connection = connexion; <span style="color: green">// Connexion instanciée auparavant
+</span>selectCommand.CommandText = <span style="color: #a31515">"SELECT ContactName FROM Customers"</span>;
+
+<span style="color: #2b91af">SqlDataReader </span>reader; <span style="color: green">// Contiendra les données
+
+</span><span style="color: blue">try
+</span>{
+    connexion.Open(); <span style="color: green">// Ouverture de la connexion
+    </span>reader = selectCommand.ExecuteReader(); <span style="color: green">// Exécution de la requête SQL
+
+    </span><span style="color: blue">while </span>(reader.Read())
+    {
+        <span style="color: green">// Affichage des données
+        </span><span style="color: #2b91af">Console</span>.WriteLine(reader[<span style="color: #a31515">"ContactName"</span>]);
+    }
+    reader.Close();
+}
+<span style="color: blue">catch </span>(<span style="color: #2b91af">Exception </span>ex)
+{
+    <span style="color: green">// Affiche des erreurs
+    </span><span style="color: #2b91af">Console</span>.WriteLine(ex.Message);
+}
+<span style="color: blue">finally
+</span>{
+    <span style="color: green">// Fermeture de la connexion à la base de données
+    </span>connexion.Close();
+}
+</pre>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline">Détails du code :</span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">Premièrement, il faut déclarer la connexion à la base de données, puis définir la requête à exécuter. On déclare un <em>SqlDataReader</em> qui contiendra nos données une fois la commande SQL exécutée. La suite du code est imbriqué dans un bloc <em>try/catch/finally</em> afin de gérer les éventuelles erreurs qui pourraient survenir. La connexion à la base de données est ouverte et la requête exécutée. La boucle <em>while</em> permet de parcourir tous les enregistrements afin de les afficher dans la console. A la fin de l’opération, on ferme le <em>SqlDataReader</em> ainsi que la connexion à la base de données. Le bloc <em>finally</em> permet de fermer la connexion à la base de données dans tous les cas (succès de la requête ou erreur).</p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify; padding-left: 30px"><span style="text-decoration: underline">Les commandes INSERT, UPDATE et DELETE</span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">Le principe est le même, à l’exception du <em>DataReader</em> qui n’est plus utile et de la méthode permettant d’exécuter la requête : <em>ExecuteReader()</em> qui devient <em>ExecuteNonQuery()</em> puisque la requête ne renvoie que le nombre de lignes modifiées.</p>
+<p style="text-align: justify">&nbsp;</p>
+<pre class="code"><span style="color: green">//Connexion à la base de données
+</span><span style="color: #2b91af">SqlConnection </span>connexion = <span style="color: blue">new </span><span style="color: #2b91af">SqlConnection</span>();
+connexion.ConnectionString = <span style="color: #a31515">@"Data Source=localhost\SQLEXPRESS;"</span>;
+connexion.ConnectionString += <span style="color: #a31515">@"Initial Catalog=Northwind;Integrated Security=SSPI"</span>;
+
+<span style="color: green">//Requête SQL
+</span><span style="color: #2b91af">SqlCommand </span>updateCommand = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>(
+    <span style="color: #a31515">"UPDATE Customers SET ContactName = 'Aymeric Lagier' WHERE CustomerID = 'ALFKI'"</span>);
+updateCommand.Connection = connexion;
+
+<span style="color: blue">int </span>lignesModifiees = 0;
+<span style="color: blue">try
+</span>{
+    connexion.Open();
+    lignesModifiees = updateCommand.ExecuteNonQuery(); <span style="color: green">// Exécution de la requête SQL
+    </span><span style="color: #2b91af">Console</span>.WriteLine(<span style="color: #a31515">"{0} ligne(s) modifiée(s)"</span>, lignesModifiees.ToString());
+}
+<span style="color: blue">catch </span>(<span style="color: #2b91af">Exception </span>ex)
+{
+    <span style="color: green">// Affiche des erreurs
+    </span><span style="color: #2b91af">Console</span>.WriteLine(ex.Message);
+}
+<span style="color: blue">finally
+</span>{
+    <span style="color: green">// Fermeture de la connexion à la base de données
+    </span>connexion.Close();
+}
+</pre>
+<p>&nbsp;</p>
+<p>Le processus est identique pour le INSERT et le DELETE.</p>
+<p style="padding-left: 30px"><span style="text-decoration: underline">La protection des données dans les requêtes</span></p>
+<p style="text-align: justify">Dans la requête ci-dessus, ‘ALFKI’ est inscrit en dur dans la requête, cela ne pause donc pas de problème. Si maintenant le <em>CustomerID</em> est une valeur entrée par l’utilisateur du programme. Si l’utilisateur entre la valeur <em>‘ALFK’I</em>, le programme affichera une erreur. Deuxième problème, les injections SQL. L’utilisateur du programme peut délibérément entrer des paramètres spéciaux qui détourneront la requête de son but initial.</p>
+<p style="text-align: justify">&nbsp;</p>
+<p>Pour contrer ce type de problème, ADO.NET met en place les requêtes paramètrées :</p>
+<p>&nbsp;</p>
+<p>Requête normale :</p>
+<p>&nbsp;</p>
+<pre class="code"><span style="color: #2b91af"></span>&nbsp;</pre>
+<pre class="code"><span style="color: #2b91af">SqlCommand </span>requete = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>(
+    <span style="color: #a31515">"SELECT * FROM Customers WHERE CustomerID = 'ALFKI'"</span>);
+
+<span style="color: #2b91af">SqlCommand </span>requete = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>(
+    <span style="color: #a31515">"SELECT * FROM Customers WHERE CustomerID = @CustomerID"</span>);
+<span style="color: green">// myVar contient une chaine entrée par l'utilisateur
+</span>requete.Parameters.AddWithValue(<span style="color: #a31515">"@CustomerID"</span>, myVar); 
+</pre>
+<pre class="code">&nbsp;</pre>
+<p>&nbsp;</p>
+<p style="text-align: justify">De cette manière un utilisateur peut entrer n’importe quelle chaine de caractères dans <em>myVar</em>, il n’y aura pas de problème d’injection SQL ni de chaine invalide. Ce processus fonctionne également pour le mode déconnecté expliqué ci-dessous.</p>
+<p style="text-align: justify">&nbsp;</p>
+<p><span style="text-decoration: underline">Le mode Deconnecté (Direct Data Access)</span></p>
+<p style="padding-left: 30px"><span style="text-decoration: underline">La commande SELECT</span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">Pour le mode déconnecté la processus est diffèrent. Le programme établit une connexion avec la base de données, récupère les données et referme immédiatement la connexion. Les opérations sur les données (affichage dans la console) ne se font qu’une fois la connexion fermée.</p>
+<p style="text-align: justify">&nbsp;</p>
+<pre class="code"><span style="color: green">// Connexion à la base de données
+</span><span style="color: #2b91af">SqlConnection </span>connexion = <span style="color: blue">new </span><span style="color: #2b91af">SqlConnection</span>();
+connexion.ConnectionString = <span style="color: #a31515">@"Data Source=localhost\SQLEXPRESS;"</span>;
+connexion.ConnectionString += <span style="color: #a31515">@"Initial Catalog=Northwind;Integrated Security=SSPI"</span>;
+
+<span style="color: green">// Requête SQL
+</span><span style="color: #2b91af">SqlCommand </span>selectCommand = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>();
+selectCommand.Connection = connexion; <span style="color: green">// Connexion instanciée auparavant
+</span>selectCommand.CommandText = <span style="color: #a31515">"SELECT * FROM Customers"</span>;
+
+<span style="color: #2b91af">SqlDataAdapter </span>adapter = <span style="color: blue">new </span><span style="color: #2b91af">SqlDataAdapter</span>(selectCommand); <span style="color: green">// Permet de lire les données
+</span><span style="color: #2b91af">DataSet </span>data = <span style="color: blue">new </span><span style="color: #2b91af">DataSet</span>(); <span style="color: green">// Contiendra les données
+
+</span><span style="color: blue">try
+</span>{
+    connexion.Open(); <span style="color: green">// Ouverture de la connexion
+    </span>adapter.Fill(data, <span style="color: #a31515">"Customers"</span>); <span style="color: green">// Récupère les données
+</span>}
+<span style="color: blue">catch </span>(<span style="color: #2b91af">Exception </span>ex)
+{
+    <span style="color: green">// Affiche des erreurs
+    </span><span style="color: #2b91af">Console</span>.WriteLine(ex.Message);
+}
+<span style="color: blue">finally
+</span>{
+    <span style="color: green">// Fermeture de la connexion à la base de données
+    </span>connexion.Close();
+}
+
+<span style="color: green">// Affichage dans la console
+</span><span style="color: blue">foreach </span>(<span style="color: #2b91af">DataRow </span>row <span style="color: blue">in </span>data.Tables[<span style="color: #a31515">"Customers"</span>].Rows)
+{
+    <span style="color: #2b91af">Console</span>.WriteLine(row[<span style="color: #a31515">"ContactName"</span>]);
+}
+</pre>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline">Détails du code :</span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">Comme pour le mode connecté, la connexion à la base de données et la requête SQL sont déclarées. A la place du <em>SqlDataReader</em>, le <em>SqlDataAdapter</em> et le <em>DataSet</em> sont déclarés. Le <em>SqlDataAdapter</em> va permettre au programme de récupérer les données qui seront stockées dans le <em>DataSet</em>. Une fois les données enregistrées en mémoire, la connexion à la base de données est interrompue. Après la fermeture de la connexion, le programme peut traiter les données (affichage sur la console) contenues en mémoire.</p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="padding-left: 30px"><span style="text-decoration: underline">Les commandes INSERT, UPDATE, DELETE</span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">Pour les requêtes INSERT, UPDATE et DELETE, le processus est le même. C’est-à-dire se connecter à la base de données pendant un très court instant afin de charger la table qui nous intéresse en mémoire pour ensuite travailler dessus.</p>
+<p>&nbsp;</p>
+<pre class="code"><span style="color: green">// Connexion à la base de données
+</span><span style="color: #2b91af">SqlConnection </span>connexion = <span style="color: blue">new </span><span style="color: #2b91af">SqlConnection</span>();
+connexion.ConnectionString = <span style="color: #a31515">@"Data Source=localhost\SQLEXPRESS;"</span>;
+connexion.ConnectionString += <span style="color: #a31515">@"Initial Catalog=Northwind;Integrated Security=SSPI"</span>;
+
+<span style="color: green">// Requête SQL (SELECT)
+</span><span style="color: #2b91af">SqlCommand </span>selectCommand = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>();
+selectCommand.CommandText = <span style="color: #a31515">"SELECT City, Country FROM Customers WHERE Country = 'UK'"</span>;
+selectCommand.Connection = connexion;
+
+<span style="color: green">//Requête SQL (UPDATE)
+</span><span style="color: #2b91af">SqlCommand </span>updateCommand = <span style="color: blue">new </span><span style="color: #2b91af">SqlCommand</span>();
+updateCommand.CommandText = <span style="color: #a31515">"UPDATE Customers SET City = @City WHERE Country = @Country"</span>;
+updateCommand.Connection = connexion;
+
+<span style="color: green">// Paramètres
+</span>updateCommand.Parameters.Add(<span style="color: #a31515">"@City"</span>, <span style="color: #2b91af">SqlDbType</span>.NVarChar, 100, <span style="color: #a31515">"City"</span>);
+updateCommand.Parameters.Add(<span style="color: #a31515">"@Country"</span>, <span style="color: #2b91af">SqlDbType</span>.NVarChar, 100, <span style="color: #a31515">"Country"</span>);
+
+<span style="color: #2b91af">SqlDataAdapter </span>adapter = <span style="color: blue">new </span><span style="color: #2b91af">SqlDataAdapter</span>(); <span style="color: green">// Permet de lire les données
+</span>adapter.SelectCommand = selectCommand; <span style="color: green">// Définitiion la requête SELECT
+</span>adapter.UpdateCommand = updateCommand; <span style="color: green">// Définitiion la requête UPDATE
+
+</span><span style="color: #2b91af">DataSet </span>data = <span style="color: blue">new </span><span style="color: #2b91af">DataSet</span>(); <span style="color: green">// Contiendra les données
+
+</span><span style="color: blue">try
+</span>{
+    connexion.Open(); <span style="color: green">// Ouverture de la connexion
+    </span>adapter.Fill(data, <span style="color: #a31515">"Customers"</span>); <span style="color: green">// Récupère les données
+</span>}
+<span style="color: blue">catch </span>(<span style="color: #2b91af">Exception </span>ex)
+{
+    <span style="color: green">// Affiche des erreurs
+    </span><span style="color: #2b91af">Console</span>.WriteLine(ex.Message);
+}
+<span style="color: blue">finally
+</span>{
+    <span style="color: green">// Fermeture de la connexion à la base de données
+    </span>connexion.Close();
+}
+
+<span style="color: green">// Modification du champ "City"
+</span><span style="color: blue">foreach </span>(<span style="color: #2b91af">DataRow </span>row <span style="color: blue">in </span>data.Tables[<span style="color: #a31515">"Customers"</span>].Rows)
+{
+    row[<span style="color: #a31515">"City"</span>] = <span style="color: #a31515">"London"</span>;
+}
+
+<span style="color: blue">int </span>lignesModifiees = 0; <span style="color: green">// Nombre de lignes modifiées
+// Modification dans la base de données
+</span>lignesModifiees = adapter.Update(data.Tables[<span style="color: #a31515">"Customers"</span>]);
+
+<span style="color: #2b91af">Console</span>.WriteLine(<span style="color: #a31515">"{0} ligne(s) modifiée(s)"</span>, lignesModifiees);
+</pre>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline">Détails du code : </span></p>
+<p>Comme dans la requête SELECT, la connexion et la requête SELECT sont définies. Petite nouveauté, la définition d’une commande UPDATE en plus de la commande SELECT ainsi que la déclaration de paramètres correspondants aux champs de la requête UPDATE. Après le stockage des données dans la mémoire, la modification des données peut s’opérer. Une fois les modifications réalisées, la méthode<em> Update()</em> de <em>DataAdapter</em> prend en paramètre la <em>DataTable</em> modifiée et envoie les données dans la base de données.</p>
+<p>Les exemples de cet article sont repris dans ce <a href="https://www.aymericlagier.com/wp-content/uploads/2010/01/ADO.NET_.zip">projet</a>. Attention, pour fonctionner ce projet a besoin de la base de données Northwind disponible <a title="Base de données Northwind" href="http://code.msdn.microsoft.com/Project/Download/FileDownload.aspx?ProjectName=northwind&amp;DownloadId=2791" target="_blank">ici</a>.</p>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline"><strong>Conclusion</strong></span></p>
+<p style="text-align: justify">&nbsp;</p>
+<p style="text-align: justify">Cet article introduit l’ensemble de classes utilisées pour interagir avec une base de données en .NET en utilisant le mode connecté principalement pour l’ASP.NET et le mode déconnecté pour les applications de bureau exécutant un nombre important d’opérations sur les données. ADO.NET offrent d’autres fonctionnalités comme les relations entre les tables avec la classe <em><a title="Classe DataRelation" href="http://msdn.microsoft.com/fr-fr/library/system.data.datarelation(VS.80).aspx" target="_blank">DataRelation</a><span style="font-style: normal">.</span></em></p>
+					</div><!-- .entry-content -->
+
+		<footer class="entry-meta">
+
+					  <!-- tags -->
+		  <div class="tagcloud" style="display: block;">
+
+				<a href="https://www.aymericlagier.com/tag/ado-net/">ADO.NET</a> <a href="https://www.aymericlagier.com/tag/c/">C#</a> 
+		  </div>
+		  <!-- end tags -->
+			
+		</footer><!-- .entry-meta -->
+	</div>
+
+	
+</article><!-- #post-## -->
+
+<div id="comments" class="comments-area">
+
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Laisser un commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://www.aymericlagier.com/2010/01/29/introduction-a-ado-net-en-c/#respond" style="display:none;">Annuler la réponse.</a></small></h3>			<form action="https://www.aymericlagier.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<p class="comment-notes"><span id="email-notes">Votre adresse de messagerie ne sera pas publiée.</span> Les champs obligatoires sont indiqués avec <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Commentaire</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Nom <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required="true" required="required"></p>
+<p class="comment-form-email"><label for="email">Adresse de messagerie <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required"></p>
+<p class="comment-form-url"><label for="url">Site web</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit btn btn-default" value="Laisser un commentaire" style="display: inline-block;"> <input type="hidden" name="comment_post_ID" value="421" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="04733f9453"></p><p style="display: none;"></p>			<input type="hidden" id="ak_js" name="ak_js" value="1510040857019"></form>
+			</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Navigation de l’article</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://www.aymericlagier.com/2010/01/25/astuce-empecher-la-connexion-automatique-de-lutilisateur-apres-sa-creation-avec-un-createuserwizard/" rel="prev"><i class="fa fa-chevron-left"></i> <span class="post-title">[ASP.NET] Empêcher la connexion automatique de l’utilisateur après sa création avec un CreateUserWizard</span></a></div><div class="nav-next"><a href="https://www.aymericlagier.com/2010/01/31/astuce-reparer-le-namespace-des-fichiers-dbml-utilises-pour-linq-to-sql/" rel="next"><span class="post-title">[Linq To SQL] Réparer le namespace des fichiers .dbml utilisés pour Linq To SQL <i class="fa fa-chevron-right"></i></span></a></div></div>
+	</nav>
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+</div><!-- close .main-content-inner -->
+<div id="secondary" class="widget-area col-sm-12 col-md-4" role="complementary">
+	<div class="well">
+				<aside id="search-3" class="widget widget_search">
+<form role="search" method="get" class="form-search" action="https://www.aymericlagier.com/">
+  <div class="input-group">
+	  <label class="screen-reader-text" for="s">Rechercher...</label>
+	<input type="text" class="form-control search-query" placeholder="Rechercher" value="" name="s" title="Rechercher...">
+	<span class="input-group-btn">
+	  <button type="submit" class="btn btn-default" name="submit" id="searchsubmit" value="Rechercher" style=""><span class="glyphicon glyphicon-search"></span></button>
+	</span>
+  </div>
+</form>
+</aside><aside id="pages-3" class="widget widget_pages"><h3 class="widget-title">Pages</h3>		<ul>
+			<li class="page_item page-item-2"><a href="https://www.aymericlagier.com/a-propos/">A propos</a></li>
+<li class="page_item page-item-2178"><a href="https://www.aymericlagier.com/windbg-aide/">Aide WinDbg</a></li>
+<li class="page_item page-item-13"><a href="https://www.aymericlagier.com/contact/">Contact</a></li>
+<li class="page_item page-item-99"><a href="https://www.aymericlagier.com/ils-parlent-de-moi/">Ils parlent de moi</a></li>
+<li class="page_item page-item-2518"><a href="https://www.aymericlagier.com/protection-utilisateurs-vie-privee/">Protection des utilisateurs et vie privée</a></li>
+<li class="page_item page-item-241"><a href="https://www.aymericlagier.com/publications/">Publications</a></li>
+		</ul>
+		</aside><aside id="categories-4" class="widget widget_categories"><h3 class="widget-title">Catégories</h3>		<ul>
+	<li class="cat-item cat-item-76"><a href="https://www.aymericlagier.com/category/net/">.NET</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="https://www.aymericlagier.com/category/acces-aux-donnees/">Accès aux données</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="https://www.aymericlagier.com/category/acces-aux-donnees/ado-net/">ADO.NET</a>
+</li>
+	<li class="cat-item cat-item-226"><a href="https://www.aymericlagier.com/category/evenements/afterworks/">Afterworks</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="https://www.aymericlagier.com/category/net/asp-net/">ASP.NET</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="https://www.aymericlagier.com/category/azure/">Azure</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="https://www.aymericlagier.com/category/base-de-donnees/">Base de données</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="https://www.aymericlagier.com/category/net/csharp/">C#</a>
+</li>
+	<li class="cat-item cat-item-244"><a href="https://www.aymericlagier.com/category/cloud/">Cloud</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="https://www.aymericlagier.com/category/communaute/">Communauté</a>
+</li>
+	<li class="cat-item cat-item-237"><a href="https://www.aymericlagier.com/category/cybersecurite/">Cybersécurité</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="https://www.aymericlagier.com/category/net/debug/">Debug</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://www.aymericlagier.com/category/dev/">Développement</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://www.aymericlagier.com/category/developpement-web/">Développement web</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="https://www.aymericlagier.com/category/net/devexpress/">DevExpress</a>
+</li>
+	<li class="cat-item cat-item-235"><a href="https://www.aymericlagier.com/category/elasticsearch/">Elasticsearch</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="https://www.aymericlagier.com/category/acces-aux-donnees/entity-framework/">Entity Framework</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="https://www.aymericlagier.com/category/evenements/">Evénements</a>
+</li>
+	<li class="cat-item cat-item-223"><a href="https://www.aymericlagier.com/category/imagine-cup-2011/">Imagine Cup 2011</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://www.aymericlagier.com/category/developpement-web/javascript/">Javascript</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="https://www.aymericlagier.com/category/acces-aux-donnees/linq-to-sql-acces-aux-donnees/">Linq To SQL</a>
+</li>
+	<li class="cat-item cat-item-224"><a href="https://www.aymericlagier.com/category/livre/">Livre</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="https://www.aymericlagier.com/category/mac-os-x/">Mac OS X</a>
+</li>
+	<li class="cat-item cat-item-228"><a href="https://www.aymericlagier.com/category/microsoft/">Microsoft</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="https://www.aymericlagier.com/category/microsoft-student-partner/">Microsoft Student Partner</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="https://www.aymericlagier.com/category/base-de-donnees/mysql/">MySQL</a>
+</li>
+	<li class="cat-item cat-item-204"><a href="https://www.aymericlagier.com/category/node-js/">Node.Js</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://www.aymericlagier.com/category/non-classe/">Non classé</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://www.aymericlagier.com/category/perso/">Perso</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.aymericlagier.com/category/developpement-web/php/">PHP</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="https://www.aymericlagier.com/category/publications/">Publications</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://www.aymericlagier.com/category/reseaux/">Réseaux</a>
+</li>
+	<li class="cat-item cat-item-219"><a href="https://www.aymericlagier.com/category/reseaux-sociaux/">Réseaux sociaux</a>
+</li>
+	<li class="cat-item cat-item-227"><a href="https://www.aymericlagier.com/category/net/silverlight/">Silverlight</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="https://www.aymericlagier.com/category/base-de-donnees/sql-server-base-de-donnees/">SQL Server</a>
+</li>
+	<li class="cat-item cat-item-190"><a href="https://www.aymericlagier.com/category/net/team-foundation-service/">Team Foundation Service</a>
+</li>
+	<li class="cat-item cat-item-242"><a href="https://www.aymericlagier.com/category/vie-privee/">Vie privée</a>
+</li>
+	<li class="cat-item cat-item-222"><a href="https://www.aymericlagier.com/category/visual-studio-2010/">Visual Studio 2010</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="https://www.aymericlagier.com/category/webmatrix/">WebMatrix</a>
+</li>
+	<li class="cat-item cat-item-225"><a href="https://www.aymericlagier.com/category/windows-phone-7/">Windows Phone 7</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="https://www.aymericlagier.com/category/windows-server-2008/">Windows Server 2008</a>
+</li>
+	<li class="cat-item cat-item-176"><a href="https://www.aymericlagier.com/category/windows8/">Windows8</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="https://www.aymericlagier.com/category/developpement-web/wordpress/">Wordpress</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="https://www.aymericlagier.com/category/net/wpf/">WPF</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="https://www.aymericlagier.com/category/xaml/">XAML</a>
+</li>
+		</ul>
+</aside>	</div>
+</div><!-- #secondary -->
+		</div><!-- close .row -->
+	</div><!-- close .container -->
+</div><!-- close .site-content -->
+
+	<div id="footer-area">
+		<div class="container footer-inner">
+			<div class="row">
+				
+				</div>
+		</div>
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info container">
+				<div class="row">
+										<nav role="navigation" class="col-md-6">
+											</nav>
+					<div class="copyright col-md-6">
+						<a href="https://www.aymericlagier.com/" title="Aymeric&#39;s blog">Aymeric's blog</a>  All rights reserved.						Thème par <a href="http://colorlib.com/" target="_blank">Colorlib</a>. Propulsé par <a href="http://wordpress.org/" target="_blank">WordPress</a>					</div>
+				</div>
+			</div><!-- .site-info -->
+			<div class="scroll-to-top" style="display: block;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+		</footer><!-- #colophon -->
+	</div>
+</div><!-- #page -->
+
+		  <script type="text/javascript">
+			jQuery( document ).ready( function( $ ){
+			  if ( $( window ).width() >= 767 ){
+				$( '.navbar-nav > li.menu-item > a' ).click( function(){
+					if( $( this ).attr('target') !== '_blank' ){
+						window.location = $( this ).attr( 'href' );
+					}
+				});
+			  }
+			});
+		  </script>
+		<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/skip-link-focus-fix.min.js.téléchargement"></script>
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/wp-embed.min.js.téléchargement"></script>
+<script type="text/javascript" src="./[ADO.NET] Introduction à ADO.NET en C# - Blog de Aymeric Lagier_files/form.js.téléchargement"></script>
+
+
+
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analytics.acheronx.xyz/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>&lt;p&gt;&lt;img src="//analytics.acheronx.xyz/piwik.php?idsite=1&amp;rec=1" style="border:0;" alt="" /&gt;&lt;/p&gt;</noscript>
+<!-- End Piwik Code -->
+
+
+
+
+
+</body></html>

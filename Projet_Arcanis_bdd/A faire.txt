@@ -1,0 +1,12 @@
+La bdd est au norme.
+il faut rajouter des contraintes sur les tables
+	 exemples:un chien en vente doit avor au moins 8 semaines
+		  un chien disponible doit avoir au moins 8 semaines
+		  seule les femmelles adultes peuvent se trouver dans les tables portee, saillie
+		  ...
+il faut ajouter des triggers sur les tables (cf. trigger.html)
+	exemples: si ajout chien ajout etat du chien
+		  si pere = NULL, rechercher saillie  dans les 3 mois precedant
+		  si portéé, ajout chien
+	          .... 
+il faut créer une table pour l'historisation complète et une pour l'archivage (cf. trigger.html)
